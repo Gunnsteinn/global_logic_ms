@@ -48,24 +48,50 @@ docker logs [NAME/CONTAINER ID]
 ```
 # Steps to Run
 
-To test the API, use the provided **GlobalLogic.postman_collection.json**.
+Before running the commands, ensure your system meets the following requirements:
 
-## Postman Setup:
+- **Docker**
+- **Maven and Java JDK** installed. Verify by running the command:
+    ```shell
+    mvn -v
+    ```
+  Ensure Java version is 17 and Apache Maven version is 3.6.3.
+
+## Running the Application:
+
+Choose one of the following methods:
+
+1. **Using Docker:**
+    ```shell
+    docker-compose -f global-logic.yml up -d --force-recreate --build
+    ```
+
+2. **Using Java:**
+    ```shell
+    # global_logic_ms/target$
+    java -jar user-0.0.1-SNAPSHOT.jar
+    ```
+
+## Testing the API
+
+To test the API, utilize the provided **GlobalLogic.postman_collection.json**.
+
+### Postman Setup:
 
 1. Import the collection into Postman.
 2. The collection includes two requests:
-    - **Register:** To create a new user.
-    - **Validate Token:** To validate the token obtained in the first request.
+   - **Register:** To create a new user.
+   - **Validate Token:** To validate the token obtained in the first request.
 
 3. In the first request, you can verify errors such as repeated user mail or invalid user mail/password.
 
-## cURL Commands:
+### cURL Commands:
 
 If you prefer working with cURL in your console, we provide the following commands:
 
-### Request
+#### Register a new user:
+
 ```bash
-# Register a new user
 curl --location --request POST 'localhost:8085/api/v1/auth/register' \
 --header 'Content-Type: application/json' \
 --data-raw '{

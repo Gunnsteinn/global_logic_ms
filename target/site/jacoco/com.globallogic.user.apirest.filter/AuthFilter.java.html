@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthFilter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">user</a> &gt; <a href="index.source.html" class="el_package">com.globallogic.user.apirest.filter</a> &gt; <span class="el_source">AuthFilter.java</span></div><h1>AuthFilter.java</h1><pre class="source lang-java linenums">package com.globallogic.user.apirest.filter;
+
+import com.globallogic.user.application.ports.output.UserOutputPort;
+import com.globallogic.user.infrastructure.utils.jwt.JwtUtil;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.util.List;
+
+<span class="fc" id="L17">@Slf4j</span>
+@Component
+@Order(1)
+<span class="fc" id="L20">@RequiredArgsConstructor</span>
+public class AuthFilter implements Filter {
+    private final JwtUtil jwtUtil;
+    private final UserOutputPort userOutputPort;
+<span class="fc" id="L24">    private static final List&lt;String&gt; PUBLIC_URLS = List.of(</span>
+            &quot;/api/v1/auth/register&quot;,
+            &quot;/doc/swagger-ui/&quot;,
+            &quot;/api-docs&quot;,
+            &quot;/api-docs/swagger-config&quot;,
+            &quot;/h2-console&quot;,
+            &quot;/h2-console/&quot;
+    );
+
+    @Override
+    public void init(final FilterConfig filterConfig) throws ServletException {
+<span class="nc" id="L35">        log.info(&quot;Initializing filter :{}&quot;, this);</span>
+<span class="nc" id="L36">    }</span>
+
+    @Override
+    public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
+<span class="nc" id="L40">        HttpServletRequest req = (HttpServletRequest) request;</span>
+<span class="nc" id="L41">        HttpServletResponse resp = (HttpServletResponse) response;</span>
+        try {
+<span class="nc" id="L43">            String uri = req.getRequestURI();</span>
+<span class="nc" id="L44">            String contextPath = req.getContextPath();</span>
+<span class="nc" id="L45">            String relativeUri = uri.substring(contextPath.length());</span>
+
+<span class="nc bnc" id="L47" title="All 2 branches missed.">            if (PUBLIC_URLS.stream().anyMatch(relativeUri::startsWith)) {</span>
+<span class="nc" id="L48">                chain.doFilter(request, response);</span>
+<span class="nc" id="L49">                return;</span>
+            }
+
+<span class="nc" id="L52">            String token = getTokenFromRequest(req);</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">            if (Boolean.TRUE.equals(jwtUtil.isTokenExpired(token))) {</span>
+<span class="nc" id="L54">                handleErrorToken(resp, &quot;Token expirado.&quot;);</span>
+<span class="nc" id="L55">                return;</span>
+            }
+
+<span class="nc" id="L58">            String username = jwtUtil.getUsernameFromToken(token);</span>
+<span class="nc bnc" id="L59" title="All 4 branches missed.">            if (username == null || !userOutputPort.existsByUser(username)) {</span>
+<span class="nc" id="L60">                handleErrorToken(resp, &quot;Error validando el usuario.&quot;);</span>
+<span class="nc" id="L61">                return;</span>
+            }
+<span class="nc" id="L63">            chain.doFilter(request, resp);</span>
+<span class="nc" id="L64">        } catch (Exception e) {</span>
+<span class="nc" id="L65">            handleErrorToken(resp, &quot;JWT Exception: &quot; + e.getMessage());</span>
+<span class="nc" id="L66">        }</span>
+<span class="nc" id="L67">    }</span>
+
+
+    @Override
+    public void destroy() {
+<span class="nc" id="L72">        log.warn(&quot;Destructing filter :{}&quot;, this);</span>
+<span class="nc" id="L73">    }</span>
+
+    private String getTokenFromRequest(HttpServletRequest request) {
+<span class="nc" id="L76">        String header = request.getHeader(HttpHeaders.AUTHORIZATION);</span>
+
+<span class="nc bnc" id="L78" title="All 4 branches missed.">        if (header != null &amp;&amp; header.startsWith(&quot;Bearer &quot;)) {</span>
+<span class="nc" id="L79">            return header.replace(&quot;Bearer &quot;, &quot;&quot;);</span>
+        }
+
+<span class="nc" id="L82">        return null;</span>
+    }
+
+    private void handleErrorToken(HttpServletResponse response, String error) throws IOException {
+<span class="nc" id="L86">        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span>
+<span class="nc" id="L87">        response.setContentType(&quot;application/json&quot;);</span>
+<span class="nc" id="L88">        response.getWriter().write(&quot;{\&quot;mensaje\&quot;: \&quot;&quot; + error + &quot;\&quot;}&quot;);</span>
+<span class="nc" id="L89">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

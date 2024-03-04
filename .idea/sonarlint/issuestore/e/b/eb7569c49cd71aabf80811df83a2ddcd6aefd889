@@ -1,0 +1,5 @@
+
+q	java:S116"URename this field "JWT_SECRET" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(âş›8¶ñ½¾ß1
+z	java:S116"YRename this field "JWT_EXPIRATION" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(É¶š ùÿÿÿÿ8¶ñ½¾ß1
+
+java:S1128"]Remove this unused import 'com.globallogic.user.infrastructure.persistence.entities.UserDAO'.(‹Í›óøÿÿÿÿ8Š¯à1

@@ -1,0 +1,8 @@
+/home/guille/Documents/Interviews/GlobalLogic/global_logic_ms/src/test/java/com/globallogic/user/infrastructure/persistence/mapper/UserDAOMapperTest.java
+/home/guille/Documents/Interviews/GlobalLogic/global_logic_ms/src/test/java/com/globallogic/user/apirest/AuthControllerTest.java
+/home/guille/Documents/Interviews/GlobalLogic/global_logic_ms/src/test/java/com/globallogic/user/infrastructure/persistence/UserPersistenceAdapterTest.java
+/home/guille/Documents/Interviews/GlobalLogic/global_logic_ms/src/test/java/com/globallogic/user/application/business/UserServiceImplTest.java
+/home/guille/Documents/Interviews/GlobalLogic/global_logic_ms/src/test/java/com/globallogic/user/infrastructure/persistence/utils/jwt/JwtUtilTest.java
+/home/guille/Documents/Interviews/GlobalLogic/global_logic_ms/src/test/java/com/globallogic/user/apirest/HelloControllerTest.java
+/home/guille/Documents/Interviews/GlobalLogic/global_logic_ms/src/test/java/com/globallogic/user/UserApplicationTests.java
+/home/guille/Documents/Interviews/GlobalLogic/global_logic_ms/src/test/java/com/globallogic/user/apirest/mapper/UserDTOMapperTest.java

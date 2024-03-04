@@ -1,0 +1,8 @@
+com/globallogic/user/infrastructure/persistence/UserPersistenceAdapterTest.class
+com/globallogic/user/apirest/mapper/UserDTOMapperTest.class
+com/globallogic/user/application/business/UserServiceImplTest.class
+com/globallogic/user/UserApplicationTests.class
+com/globallogic/user/infrastructure/persistence/utils/jwt/JwtUtilTest.class
+com/globallogic/user/infrastructure/persistence/mapper/UserDAOMapperTest.class
+com/globallogic/user/apirest/HelloControllerTest.class
+com/globallogic/user/apirest/AuthControllerTest.class

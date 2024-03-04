@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+#Glogal Logic app backend service
+  glogallogicapp-back:
+    build:
+      context: .
+      args:
+        - JAR_FILE=target/user-0.0.1-SNAPSHOT.jar
+    container_name: glogalLogicApp-back
+    environment:
+      - JAVA_OPTS=-Xms256M -Xmx256M
+    ports:
+      - "8085:8085"

@@ -1,0 +1,109 @@
+{
+	"info": {
+		"_postman_id": "5332040e-c743-412e-9a55-28946512b233",
+		"name": "GlobalLogic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const body = `{",
+							"    \"name\": \"Juan Rodriguez\",",
+							"    \"email\": \"juan@rodriguez.org\",",
+							"    \"password\": \"hunter2\",",
+							"    \"phones\": [",
+							"        {",
+							"            \"number\": \"1234567\",",
+							"            \"citycode\": \"1\",",
+							"            \"contrycode\": \"57\"",
+							"        }",
+							"    ]",
+							"}`;",
+							"",
+							"pm.environment.set('body', body);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.environment.set('token', jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{body}}\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8085/api/v1/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8085",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Hello",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8085/api/v1/user/hello",
+					"host": [
+						"localhost"
+					],
+					"port": "8085",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"hello"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

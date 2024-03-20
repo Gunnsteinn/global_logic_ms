@@ -1,7 +1,7 @@
 package com.globallogic.user.infrastructure.persistence.utils.jwt;
 
-
-import com.globallogic.user.infrastructure.utils.jwt.JwtUtil;
+import com.globallogic.user.infrastructure.utils.jwt.JWTUtils;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -9,37 +9,45 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.Map;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
 class JwtUtilTest {
 
     @Mock
-    private JwtUtil jwtUtil;
+    private JWTUtils jwtUtils;
 
     @InjectMocks
-    private JwtUtil jwtUtilMock;
+    private JWTUtils jwtUtil;
+
+    private final String jwtSecret = "global123456789LOGIC987654321global";
+
+    @BeforeEach
+    void setUp() {
+        ReflectionTestUtils.setField(jwtUtil, "jwtSecret", jwtSecret);
+    }
 
     @Test
     void shouldGenerateToken() {
-        String email = "test@example.com";
-        ReflectionTestUtils.setField(jwtUtilMock, "JWT_SECRET", "global123456789LOGIC987654321global");
-        ReflectionTestUtils.setField(jwtUtilMock, "JWT_EXPIRATION", 300000L); // 1 hour
+        byte[] keyBytes = jwtSecret.getBytes();
+        SecretKey secretKey = new SecretKeySpec(keyBytes, 0, 32, "HmacSHA256");
+        lenient().when(jwtUtils.getKey()).thenReturn(secretKey);
 
-        String token = jwtUtilMock.generateToken(email);
+        SecretKey returnedKey = jwtUtil.getKey();
 
-        assertNotNull(token);
-        assertFalse(token.isEmpty());
+        assertEquals(secretKey, returnedKey);
     }
 
     @Test
-    void shouldThrowIllegalArgumentExceptionWhenKeyLengthIsInsufficient() {
+    void shouldThrowExceptionIfKeyLengthIsInsufficient() {
+        String shortKey = "shortKey";
+        ReflectionTestUtils.setField(jwtUtil, "jwtSecret", shortKey);
 
-        ReflectionTestUtils.setField(jwtUtilMock, "JWT_SECRET", "shortSecret");
-        assertThrows(IllegalArgumentException.class, jwtUtilMock::getKey);
+        assertThrows(IllegalArgumentException.class, () -> jwtUtil.getKey());
     }
-
 }

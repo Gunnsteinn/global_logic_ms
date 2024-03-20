@@ -2,7 +2,6 @@ package com.globallogic.user.infrastructure.persistence.mapper;
 
 import com.globallogic.user.domain.model.User;
 import com.globallogic.user.infrastructure.persistence.entities.UserDAO;
-import com.globallogic.user.infrastructure.persistence.mapper.UserDAOMapper;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

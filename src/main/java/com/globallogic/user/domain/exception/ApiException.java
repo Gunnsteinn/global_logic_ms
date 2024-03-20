@@ -1,18 +1,16 @@
 package com.globallogic.user.domain.exception;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
-import org.springframework.http.HttpStatus;
-
-import java.util.Collections;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @ToString
 @AllArgsConstructor
 public class ApiException extends RuntimeException {
     @JsonProperty("mensaje")
-    private String message;
-    private int statusCode;
+    private final String message;
+    private final int statusCode;
 
 }

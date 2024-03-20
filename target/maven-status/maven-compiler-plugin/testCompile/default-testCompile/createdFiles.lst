@@ -1,5 +1,6 @@
 com/globallogic/user/infrastructure/persistence/UserPersistenceAdapterTest.class
 com/globallogic/user/apirest/mapper/UserDTOMapperTest.class
+com/globallogic/user/apirest/filter/JWTAuthenticationTest.class
 com/globallogic/user/application/business/UserServiceImplTest.class
 com/globallogic/user/UserApplicationTests.class
 com/globallogic/user/infrastructure/persistence/utils/jwt/JwtUtilTest.class

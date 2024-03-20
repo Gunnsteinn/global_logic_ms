@@ -1,9 +1,9 @@
 package com.globallogic.user.application.business;
 
+import com.globallogic.user.apirest.filter.JWTAuthentication;
 import com.globallogic.user.application.ports.output.UserOutputPort;
 import com.globallogic.user.domain.exception.ApiException;
 import com.globallogic.user.domain.model.User;
-import com.globallogic.user.infrastructure.utils.jwt.JwtUtil;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +14,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.ZonedDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,7 +26,7 @@ class UserServiceImplTest {
     private UserOutputPort userOutputPort;
 
     @Mock
-    private JwtUtil jwtUtil;
+    private JWTAuthentication JWTAuthentication;
 
     @InjectMocks
     private UserServiceImpl userServiceImpl;
@@ -40,12 +41,30 @@ class UserServiceImplTest {
         user.setModified(time);
         user.setLastLogin(time);
         user.setToken(token);
-        when(jwtUtil.generateToken(user.getEmail())).thenReturn(token);
+        when(JWTAuthentication.getJWTToken(user.getEmail())).thenReturn(token);
         when(userOutputPort.saveUser(user)).thenReturn(user);
         var response = userServiceImpl.register(user);
 
         assertThat(response.getToken()).isEqualTo(token);
         assertThat(response.getEmail()).isEqualTo(user.getEmail());
+    }
+
+    @Test
+    void shouldReturnOkWhenRegisterUserWithValidParams() {
+        User user = easyRandom.nextObject(User.class);
+        String token = "generatedToken";
+        when(JWTAuthentication.getJWTToken(user.getEmail())).thenReturn(token);
+        when(userOutputPort.existsByUser(user.getEmail())).thenReturn(false);
+        when(userOutputPort.saveUser(user)).thenReturn(user);
+
+        User registeredUser = userServiceImpl.register(user);
+
+        assertThat(registeredUser.getToken()).isEqualTo(token);
+        assertThat(registeredUser.getEmail()).isEqualTo(user.getEmail());
+        assertThat(registeredUser.getCreated()).isNotNull();
+        assertThat(registeredUser.getModified()).isNotNull();
+        assertThat(registeredUser.getLastLogin()).isNotNull();
+        assertThat(registeredUser.isActive()).isTrue();
     }
 
     @Test

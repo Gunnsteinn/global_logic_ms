@@ -1,7 +1,6 @@
 /home/guille/Documents/Interviews/GlobalLogic/global_logic_ms/src/main/java/com/globallogic/user/apirest/dto/input/RegisterDTO.java
 /home/guille/Documents/Interviews/GlobalLogic/global_logic_ms/src/main/java/com/globallogic/user/application/ports/output/UserOutputPort.java
 /home/guille/Documents/Interviews/GlobalLogic/global_logic_ms/src/main/java/com/globallogic/user/infrastructure/persistence/mapper/UserDAOMapper.java
-/home/guille/Documents/Interviews/GlobalLogic/global_logic_ms/src/main/java/com/globallogic/user/domain/provider/UserProvider.java
 /home/guille/Documents/Interviews/GlobalLogic/global_logic_ms/src/main/java/com/globallogic/user/apirest/dto/input/PhoneDTO.java
 /home/guille/Documents/Interviews/GlobalLogic/global_logic_ms/src/main/java/com/globallogic/user/UserApplication.java
 /home/guille/Documents/Interviews/GlobalLogic/global_logic_ms/src/main/java/com/globallogic/user/apirest/dto/output/UserDTO.java

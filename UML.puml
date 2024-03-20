@@ -1,0 +1,182 @@
+@startuml
+class com.globallogic.user.apirest.dto.input.RegisterDTO {
+- String name
+- String email
+- String password
+- List<PhoneDTO> phones
+}
+
+interface com.globallogic.user.application.ports.output.UserOutputPort {
+~ User saveUser(User)
+~ boolean existsByUser(String)
+}
+
+class com.globallogic.user.infrastructure.persistence.mapper.UserDAOMapper {
+- ModelMapper modelMapper
++ UserDAO convertToDAO(User)
++ User convertToDomain(UserDAO)
+}
+
+
+class com.globallogic.user.apirest.dto.input.PhoneDTO {
+- String number
+- String cityCode
+- String countryCode
+}
+
+class com.globallogic.user.UserApplication {
++ {static} void main(String[])
+}
+
+class com.globallogic.user.apirest.dto.output.UserDTO {
+- long id
+- String name
+- String email
+- List<PhoneDTO> phones
+- ZonedDateTime created
+- ZonedDateTime modified
+- ZonedDateTime lastLogin
+- String token
+- boolean isActive
+}
+
+interface com.globallogic.user.infrastructure.persistence.repository.UserRepository {
+~ Optional<UserDAO> findByEmail(String)
+~ boolean existsByEmail(String)
+}
+
+class com.globallogic.user.apirest.AuthController {
+- UserService userService
+- UserDTOMapper mapper
++ ResponseEntity<UserDTO> register(RegisterDTO)
+}
+
+
+class com.globallogic.user.apirest.HelloController {
++ ResponseEntity<Map<String,String>> hello()
+}
+
+interface com.globallogic.user.domain.business.UserService {
+~ User register(User)
+}
+
+class com.globallogic.user.apirest.dto.output.PhoneDTO {
+- String number
+- String cityCode
+- String countryCode
+}
+
+class com.globallogic.user.apirest.configuration.GlobalExceptionHandler {
++ ResponseEntity<Map<String,Object>> handleCustomException(ApiException)
++ ResponseEntity<Map<String,String>> handleValidationException(MethodArgumentNotValidException)
++ ResponseEntity<Map<String,Object>> handleCustomException(Exception)
+}
+
+class com.globallogic.user.application.business.UserServiceImpl {
+- UserOutputPort userOutputPort
+- JwtUtil jwtUtil
++ User register(User)
+}
+
+
+class com.globallogic.user.domain.model.User {
+- long id
+- String name
+- String email
+- String password
+- List<Phone> phones
+- String token
+- boolean isActive
+- ZonedDateTime lastLogin
+- ZonedDateTime modified
+- ZonedDateTime created
+}
+
+class com.globallogic.user.infrastructure.persistence.entities.PhoneDAO {
+- long id
+- String number
+- String cityCode
+- String countryCode
+- UserDAO user
+}
+
+class com.globallogic.user.infrastructure.utils.jwt.JwtUtil {
+- String JWT_SECRET
+- Long JWT_EXPIRATION
++ String generateToken(String)
++ String getUsernameToken(String)
++ SecretKey getKey()
++ Map<String,Object> generateClaims()
++ T getClaim(String,Function<Claims,T>)
++ String getUsernameFromToken(String)
++ Boolean isTokenExpired(String)
+}
+
+
+class com.globallogic.user.apirest.mapper.UserDTOMapper {
+- ModelMapper modelMapper
++ User convertToDomain(RegisterDTO)
++ UserDTO convertToDTO(User)
+}
+
+
+class com.globallogic.user.apirest.configuration.ModelMapperConfiguration {
++ ModelMapper modelMapper()
+}
+
+class com.globallogic.user.infrastructure.persistence.UserPersistenceAdapter {
+- UserRepository userRepository
+- UserDAOMapper userDAOMapper
++ User saveUser(User)
++ boolean existsByUser(String)
+}
+
+
+class com.globallogic.user.apirest.filter.AuthFilter {
+- JwtUtil jwtUtil
+- UserOutputPort userOutputPort
+- {static} List<String> PUBLIC_URLS
++ void init(FilterConfig)
++ void doFilter(ServletRequest,ServletResponse,FilterChain)
++ void destroy()
+- String getTokenFromRequest(HttpServletRequest)
+- void handleErrorToken(HttpServletResponse,String)
+}
+
+
+class com.globallogic.user.domain.model.Phone {
+- long id
+- String number
+- String cityCode
+- String countryCode
+- User user
+}
+
+class com.globallogic.user.domain.exception.ApiException {
+- String message
+- int statusCode
+}
+
+class com.globallogic.user.infrastructure.persistence.entities.UserDAO {
+- {static} String MAIL_REGEX
++ {static} java.util.regex.Pattern REGEX
+- long id
+- String name
+- String email
+- String password
+- List<PhoneDAO> phones
+- String token
+- boolean isActive
+- ZonedDateTime lastLogin
+- ZonedDateTime modified
+- ZonedDateTime created
+}
+
+
+
+org.springframework.data.jpa.repository.JpaRepository <|-- com.globallogic.user.infrastructure.persistence.repository.UserRepository
+com.globallogic.user.domain.business.UserService <|.. com.globallogic.user.application.business.UserServiceImpl
+com.globallogic.user.application.ports.output.UserOutputPort <|.. com.globallogic.user.infrastructure.persistence.UserPersistenceAdapter
+com.globallogic.user.apirest.filter.Filter <|.. com.globallogic.user.apirest.filter.AuthFilter
+com.globallogic.user.domain.exception.RuntimeException <|-- com.globallogic.user.domain.exception.ApiException
+@enduml

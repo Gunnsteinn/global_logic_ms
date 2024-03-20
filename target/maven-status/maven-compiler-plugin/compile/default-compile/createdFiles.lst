@@ -13,7 +13,6 @@ com/globallogic/user/apirest/AuthController.class
 com/globallogic/user/apirest/dto/input/RegisterDTO.class
 com/globallogic/user/apirest/dto/input/PhoneDTO.class
 com/globallogic/user/infrastructure/persistence/mapper/UserDAOMapper.class
-com/globallogic/user/domain/provider/UserProvider.class
 com/globallogic/user/domain/model/User.class
 com/globallogic/user/apirest/HelloController.class
 com/globallogic/user/apirest/dto/output/UserDTO$UserDTOBuilder.class

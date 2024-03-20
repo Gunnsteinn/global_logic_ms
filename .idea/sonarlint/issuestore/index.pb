@@ -29,8 +29,6 @@ x
 Hsrc/main/java/com/globallogic/user/infrastructure/utils/jwt/JwtUtil.java,e/b/eb7569c49cd71aabf80811df83a2ddcd6aefd889
 r
 Bsrc/main/java/com/globallogic/user/apirest/dto/input/PhoneDTO.java,6/e/6e2488103a9a963de6f053ac3ab9b612cecb536a
-t
-Dsrc/main/java/com/globallogic/user/domain/provider/UserProvider.java,6/1/614eaea600233e071a82f2391cd07ec52accfdc2
 r
 Bsrc/main/java/com/globallogic/user/apirest/dto/output/UserDTO.java,2/6/26aae463ef0b34847c9728f7f70179c6d1bf28a1
 u
@@ -75,3 +73,9 @@ Xsrc/test/java/com/globallogic/user/infrastructure/persistence/utils/jwt/JwtUtil
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+8
+UML.puml,2/a/2a1f2a97eac22b995a16b38f25844c719c0658ea
+S
+#.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0
+]
+-.idea/sonarlint/securityhotspotstore/index.pb,8/8/88a9255124c95bdc913197c120a8d560edc59c8e

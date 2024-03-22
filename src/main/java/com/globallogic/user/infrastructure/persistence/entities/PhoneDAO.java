@@ -7,10 +7,11 @@ import lombok.*;
 @Entity
 @Data
 @NoArgsConstructor
+@Table(name = "phones")
 @ToString
 public class PhoneDAO {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String number;
     private String cityCode;
@@ -18,7 +19,7 @@ public class PhoneDAO {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserDAO.class)
-    @JoinColumn(name = "phones", nullable = true)
+    @JoinColumn(name = "user_id", nullable = true)
     private UserDAO user;
 
 }

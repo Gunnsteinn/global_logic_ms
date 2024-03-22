@@ -25,8 +25,6 @@ u
 Esrc/main/java/com/globallogic/user/domain/exception/ApiException.java,f/c/fc57a1363c395d37a8e3cf67192963265a83ec3e
 8
 user.iml,0/e/0e0bf93938d242c0f801503e834f589aa213694f
-x
-Hsrc/main/java/com/globallogic/user/infrastructure/utils/jwt/JwtUtil.java,e/b/eb7569c49cd71aabf80811df83a2ddcd6aefd889
 r
 Bsrc/main/java/com/globallogic/user/apirest/dto/input/PhoneDTO.java,6/e/6e2488103a9a963de6f053ac3ab9b612cecb536a
 r
@@ -49,8 +47,6 @@ s
 Csrc/main/java/com/globallogic/user/apirest/dto/output/PhoneDTO.java,6/f/6f33368720e266010dfde97640cfc628d5fe301e
 „
 Tsrc/main/java/com/globallogic/user/apirest/configuration/GlobalExceptionHandler.java,e/c/ec029dbbc65a067d1bd0752833167bda8ea70241
-q
-Asrc/main/java/com/globallogic/user/apirest/filter/AuthFilter.java,0/9/09f3ea8f4ebe5a55d6fc22328e46ed7f6c367f7e
 r
 Bsrc/test/java/com/globallogic/user/apirest/AuthControllerTest.java,c/c/cc79f3bf38b0f1cdca92987f54e83ea676104dcb
 €
@@ -79,3 +75,11 @@ S
 #.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0
 ]
 -.idea/sonarlint/securityhotspotstore/index.pb,8/8/88a9255124c95bdc913197c120a8d560edc59c8e
+
+Osrc/main/java/com/globallogic/user/apirest/configuration/WebSecurityConfig.java,1/c/1cd65c3d35666b5c10dab6c71c9be661d43e39a4
+}
+Msrc/main/java/com/globallogic/user/apirest/filter/JWTAuthorizationFilter.java,4/7/4717c8ac218871255cab5b5561dfe70fe0700bd2
+x
+Hsrc/main/java/com/globallogic/user/apirest/filter/JWTAuthentication.java,a/3/a3c55ed63d15b40cca5be7bb7032f23c1df33664
+y
+Isrc/main/java/com/globallogic/user/infrastructure/utils/jwt/JWTUtils.java,e/f/ef6b40073b6334ea1b30c6e7c93a87e7d53f8ca8

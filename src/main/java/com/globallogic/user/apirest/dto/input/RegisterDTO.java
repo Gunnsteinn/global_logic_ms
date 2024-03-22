@@ -22,3 +22,10 @@ public class RegisterDTO {
     private String password;
     private List<PhoneDTO> phones;
 }
+
+
+// @NoArgsConstructor: Esta anotación de Lombok genera un constructor sin argumentos para la clase. Se utiliza para
+// crear instancias de la clase sin necesidad de proporcionar argumentos al constructor.
+//
+// @AllArgsConstructor: Esta anotación de Lombok genera un constructor que acepta argumentos para todos los campos de
+// la clase. Se utiliza para crear instancias de la clase con todos los campos inicializados.
